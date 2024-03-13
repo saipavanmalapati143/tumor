@@ -22,4 +22,4 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
 EXPOSE 5000
 
 # Command to run the application
-CMD ["flask", "run"]
+CMD ["flask", "run", "0.0.0.0:5000"]
