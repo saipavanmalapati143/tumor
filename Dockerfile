@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # Set environment variables for Flask
 ENV FLASK_APP=app.py \
     FLASK_RUN_HOST=0.0.0.0 \
-    FLASK_RUN_PORT=8080 \
+    FLASK_RUN_PORT=5000 \
     UPLOAD_FOLDER=uploads \
     STATIC_FOLDER=static
 
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
     pip install --no-cache-dir -r requirements.txt
 
 # Expose port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 5000
 
 # Command to run the application
 CMD ["flask", "run"]
