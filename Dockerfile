@@ -1,25 +1,21 @@
-# Use the official Python image as a base image
+# Use an official Python runtime as a parent image
 FROM python:3.8-slim
-
-# Set environment variables for Flask
-ENV FLASK_APP=app.py \
-    FLASK_RUN_HOST=0.0.0.0 \
-    FLASK_RUN_PORT=5000 \
-    UPLOAD_FOLDER=uploads \
-    STATIC_FOLDER=static
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . .
+COPY . /app
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y libgl1-mesa-glx && \
-    pip install --no-cache-dir -r requirements.txt
+# Install any needed dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 to the outside world
+# Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Command to run the application
-CMD ["flask", "run", "0.0.0.0:5000"]
+# Define environment variable
+ENV UPLOAD_FOLDER /app/uploads
+ENV STATIC_FOLDER /app/static
+
+# Run app.py when the container launches
+CMD ["python", "app.py", "0.0.0.0:5000"]
