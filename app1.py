@@ -65,7 +65,7 @@ def classify(model, image_path):
     predicted_label_index = np.argmax(prob)
 
     # Mapping index to label name
-    label_names = ['glioma_tumor', 'meningioma_tumor', 'no_tumor', 'pituitary_tumor']
+    label_names = ['tumor',  'normal']
     # Replace with your actual label names
 
     label = label_names[predicted_label_index]
