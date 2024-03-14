@@ -1,5 +1,8 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8-slim
+FROM ubuntu
+RUN apt update
+RUN apt install python3-pip -y
+
 
 # Set the working directory in the container
 WORKDIR /app
