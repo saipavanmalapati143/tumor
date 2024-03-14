@@ -16,9 +16,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
-ENV UPLOAD_FOLDER /app/uploads
-ENV STATIC_FOLDER /app/static
 
 # Run app.py when the container launches
-CMD ["python", "app.py", "0.0.0.0:5000"]
+CMD ["python","-m","flask","run",  "0.0.0.0:5000"]
