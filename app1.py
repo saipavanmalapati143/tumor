@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import tkinter as tk
-from tkinter import filedialog
+
 import numpy as np
 from keras.preprocessing import image
 from keras.models import Sequential
@@ -11,8 +10,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import tkinter as tk
-from tkinter import filedialog
+
 import numpy as np
 from keras.preprocessing import image
 from keras.models import Sequential
@@ -84,23 +82,21 @@ def home():
 
 @app.route("/classify", methods=["POST", "GET"])
 def upload_file():
-
     if request.method == "GET":
         return render_template("home.html")
-
     else:
         file = request.files["image"]
         upload_image_path = os.path.join(UPLOAD_FOLDER, file.filename)
-        print(upload_image_path)
-        file.save(upload_image_path)
+        try:
+            file.save(upload_image_path)
+            app.logger.info("Image saved successfully: %s", upload_image_path)
+        except OSError as e:
+            app.logger.error("Error saving image: %s", str(e))
+            return "Error saving image", 500
 
         label, prob = classify(cnn_model, upload_image_path)
-
         prob = round((prob * 100), 2)
-
-    return render_template(
-        "classify.html", image_file_name=file.filename, label=label, prob=prob
-    )
+        return render_template("classify.html", image_file_name=file.filename, label=label, prob=prob)
 
 
 @app.route("/classify/<filename>")
