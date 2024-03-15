@@ -7,4 +7,3 @@ pillow
 scikit-learn
 scipy
 tensorflow
-Tcl/Tk
