@@ -1,17 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
-import numpy as np
-from keras.preprocessing import image
-from keras.models import Sequential
 from keras.layers import Dense
 import os
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-import numpy as np
 from keras.preprocessing import image
 from keras.models import Sequential
 from keras.layers import Dense
