@@ -1,11 +1,13 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.layers import Dense
-import os
+import tkinter as tk
+from tkinter import filedialog
+import numpy as np
 from keras.preprocessing import image
 from keras.models import Sequential
 from keras.layers import Dense
+import os
 from keras.models import model_from_json
 import tensorflow as tf
 from flask import Flask, render_template, request, send_from_directory
@@ -54,7 +56,7 @@ def classify(model, image_path):
     predicted_label_index = np.argmax(prob)
 
     # Mapping index to label name
-    label_names = ['tumor',  'normal']
+    label_names = [ 'tumor', 'normal']
     # Replace with your actual label names
 
     label = label_names[predicted_label_index]
@@ -73,21 +75,23 @@ def home():
 
 @app.route("/classify", methods=["POST", "GET"])
 def upload_file():
+
     if request.method == "GET":
         return render_template("home.html")
+
     else:
         file = request.files["image"]
         upload_image_path = os.path.join(UPLOAD_FOLDER, file.filename)
-        try:
-            file.save(upload_image_path)
-            app.logger.info("Image saved successfully: %s", upload_image_path)
-        except OSError as e:
-            app.logger.error("Error saving image: %s", str(e))
-            return "Error saving image", 500
+        print(upload_image_path)
+        file.save(upload_image_path)
 
         label, prob = classify(cnn_model, upload_image_path)
+
         prob = round((prob * 100), 2)
-        return render_template("classify.html", image_file_name=file.filename, label=label, prob=prob)
+
+    return render_template(
+        "classify.html", image_file_name=file.filename, label=label, prob=prob
+    )
 
 
 @app.route("/classify/<filename>")
@@ -97,5 +101,5 @@ def send_file(filename):
 
 if __name__ == "__main__":
 
-    app.run(host="0.0.0.0",port=5000,debug=True)
+    app.run()
 
